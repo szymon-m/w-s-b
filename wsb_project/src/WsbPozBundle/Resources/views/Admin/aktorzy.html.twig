@@ -1,0 +1,23 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+<ul>
+    {% if is_granted('ROLE_ADMIN') %}
+
+    <li><a href="{{ path('nowy_aktor') }}"> Nowy aktor </a></li>
+
+    {% endif %}
+</ul>
+{% for aktor in aktorzy %}
+<ul>
+    <li>{{ aktor.idAktora}}.{{ aktor.imie }} {{ aktor.nazwisko }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('usun_aktora',{'id': aktor.idAktora }) }}"> Usuń </a>
+
+    {% endif %}</li>
+</ul>
+{% endfor %}
+{% endblock %}

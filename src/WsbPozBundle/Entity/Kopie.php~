@@ -1,0 +1,56 @@
+<?php
+
+namespace WsbPozBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Kopie
+ *
+ * @ORM\Table(name="kopie", indexes={@ORM\Index(name="fk_kopie_filmy1_idx", columns={"id_filmu"})})
+ * @ORM\Entity
+ */
+class Kopie
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="czy_dostepna", type="string", length=1, nullable=true)
+     */
+    private $czyDostepna;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_kopii", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idKopii;
+
+    /**
+     * @var \WsbPozBundle\Entity\Filmy
+     *
+     * @ORM\ManyToOne(targetEntity="WsbPozBundle\Entity\Filmy")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_filmu", referencedColumnName="id_filmu")
+     * })
+     */
+    private $idFilmu;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="WsbPozBundle\Entity\AppUsers", mappedBy="kopieKopii")
+     */
+    private $appUsers;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->appUsers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

@@ -1,0 +1,17 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+
+{% for filmy in filmy %}
+<ul>
+    <li>{{ filmy.idFilmu}}.{{ filmy.tytul }}  Rok produkcji: {{ filmy.rokProdukcji }} Cena: {{ filmy.cena }}</li>
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('usun_film',{'id': filmy.idFilmu }) }}"> Usuń </a>
+
+    {% endif %}
+</ul>
+{% endfor %}
+{% endblock %}

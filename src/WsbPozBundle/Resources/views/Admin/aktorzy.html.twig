@@ -1,0 +1,11 @@
+<div id="aktorzy">
+{% block content %}
+{% for aktor in aktorzy %}
+
+<ul>
+    <li>{{ aktor.idAktora }} - {{ aktor.imie }} {{ aktor.nazwisko }}</li>
+</ul>
+{% endfor %}
+
+    {% endblock %}
+</div>

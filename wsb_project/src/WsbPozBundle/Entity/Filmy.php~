@@ -1,0 +1,68 @@
+<?php
+
+namespace WsbPozBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Filmy
+ *
+ * @ORM\Table(name="filmy")
+ * @ORM\Entity
+ */
+class Filmy
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tytul", type="string", length=40, nullable=true)
+     */
+    private $tytul;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rok_produkcji", type="integer", nullable=true)
+     */
+    private $rokProdukcji;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cena", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $cena;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_filmu", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idFilmu;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="WsbPozBundle\Entity\Aktorzy", inversedBy="filmyFilmu")
+     * @ORM\JoinTable(name="filmy_has_aktorzy",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="filmy_id_filmu", referencedColumnName="id_filmu")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="aktorzy_id_aktora", referencedColumnName="id_aktora")
+     *   }
+     * )
+     */
+    private $aktorzyAktora;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->aktorzyAktora = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

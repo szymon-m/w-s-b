@@ -1,0 +1,104 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+    {% if app.session.flashBag.has('failure') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('failure') %}
+                !!!! ============ {{ msg }} ================= !!!
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    </br><b>Aktorzy występujący w filmie:</b></br>
+    <div id="aktorzy">
+    </div>
+
+    </br><b>Aktorzy niewystępujący w filmie:</b></br>
+    <div id="aktorzy_nie">
+    </div>
+
+
+
+<script>
+    var $film = $('#aktora_do_filmu_filmyIdFilmu');
+    // When sport gets selected ...
+    $film.change(function() {
+        // ... retrieve the corresponding form.
+        var $form = $(this).closest('form');
+        // Simulate form data, but only include the selected sport value.
+        var data = {};
+        data[('filmyIdFilmu')] = $film.val();
+        //var e = document.getElementById("#aktora_do_filmu");
+        //var data = encodeURIComponent(''+$( "select.aktora_do_filmu option:selected").val());
+
+
+        //$film.
+        //data[$film.attr('name')] = $film.val();
+        // Submit data via AJAX to the form's action path.
+
+        var path = "{{ path("admin/aktorzy") }}";
+        var path2 = "{{ path("admin/aktorzy_nie_wystepujacy") }}";
+        //var req,el = document.getElementById("aktora_do_filmu");
+
+        // get our route uri friendly
+        /*if("textContent" in el){
+            req = encodeURIComponent('id_filmu='+el.textContent);
+        }
+        else{
+            req = encodeURIComponent('id_filmu='+el.innerText);
+        }*/
+
+        $.ajax({
+            url : path,
+            type: "POST",
+            data : data,
+            success: function(dane) {
+                // Replace current position field ...
+
+
+               // $('#aktorzy').empty();
+               // $('#aktorzy').append(html);
+                var result = $('<div />').append(dane).find('#aktorzy').html();
+                $('#aktorzy').html(result);
+
+
+                //$('#aktorzy').replaceWith
+                //($(dane).find('#aktorzy'));
+                //$('#aktorzy').replaceWith(
+                        // ... with the returned one from the AJAX response.
+                  //      $(html).find('aktorzy')
+
+                // Position field now displays the appropriate positions.
+            }
+        });
+        $.ajax({
+            url : path2,
+            type: "POST",
+            data : data,
+            success: function(dane) {
+                // Replace current position field ...
+
+
+               // $('#aktorzy').empty();
+               // $('#aktorzy').append(html);
+                var result = $('<div />').append(dane).find('#aktorzy_nie').html();
+                $('#aktorzy_nie').html(result);
+
+
+                //$('#aktorzy').replaceWith
+                //($(dane).find('#aktorzy'));
+                //$('#aktorzy').replaceWith(
+                        // ... with the returned one from the AJAX response.
+                  //      $(html).find('aktorzy')
+
+                // Position field now displays the appropriate positions.
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+    {% if app.session.flashBag.has('failure') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('failure') %}
+             </br>   !!!! ============ {{ msg }} ================= !!! </br>
+            {% endfor %}
+        </div>
+    {% endif %}
+<table><tr><th>Numer filmu</th><th>Tytuł</th><th>Rok produkcji</th><th>Cena</th>{% if is_granted('IS_AUTHENTICATED_FULLY') %}<th>Wypożycz</th>{% endif %}</tr></td>
+{% for filmy in filmy %}
+
+    <tr><td>{{ filmy.idFilmu}}</td>
+        <td>{{ filmy.tytul }}</td>
+        <td>{{ filmy.rokProdukcji }}</td>
+        <td>{{ filmy.cena }}</td>
+        <td>{% if is_granted('IS_AUTHENTICATED_FULLY') %}<a href="{{ url('wypozycz', {'id_filmu': filmy.idFilmu }) }}">Wypożycz</a>{% endif %}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

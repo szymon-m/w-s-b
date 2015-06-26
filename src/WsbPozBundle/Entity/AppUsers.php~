@@ -1,0 +1,103 @@
+<?php
+
+namespace WsbPozBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AppUsers
+ *
+ * @ORM\Table(name="app_users", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
+ * @ORM\Entity
+ */
+class AppUsers
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=25, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=60, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
+     */
+    private $imie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nazwisko", type="string", length=45, nullable=false)
+     */
+    private $nazwisko;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=60, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isActive", type="boolean", nullable=false)
+     */
+    private $isactive;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isAdmin", type="boolean", nullable=false)
+     */
+    private $isadmin;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="newsletter", type="boolean", nullable=true)
+     */
+    private $newsletter;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="WsbPozBundle\Entity\Kopie", inversedBy="appUsers")
+     * @ORM\JoinTable(name="app_users_has_kopie",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="app_users_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="kopie_id_kopii", referencedColumnName="id_kopii")
+     *   }
+     * )
+     */
+    private $kopieKopii;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->kopieKopii = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

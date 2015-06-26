@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - zadanie_3@localhost" uuid="8ad85ff6-b1e3-49d7-a2af-51c8ea36adfe">
+    <database-info product="MySQL" version="5.5.33-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="zadanie_3"/>
+    <table name="aktorzy" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id_aktora" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="imie" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="nazwisko" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id_aktora"/>
+      <exported-key name="fk_filmy_has_aktorzy_aktorzy1" table="filmy_has_aktorzy" schema="" catalog="zadanie_3" columns="aktorzy_id_aktora"/>
+    </table>
+    <table name="app_users" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="imie" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="nazwisko" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="isActive" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="isAdmin" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="newsletter" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_app_users_has_kopie_app_users2" table="app_users_has_kopie" schema="" catalog="zadanie_3" columns="app_users_id"/>
+      <exported-key name="fk_app_users_has_kopie_app_users1" table="wypozyczenia" schema="" catalog="zadanie_3" columns="app_users_id"/>
+      <index name="username_UNIQUE" unique="true" columns="username"/>
+    </table>
+    <table name="app_users_has_kopie" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="app_users_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kopie_id_kopii" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="data_wypozyczenia" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="data_zwrotu" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="app_users_id,kopie_id_kopii"/>
+      <foreign-key name="fk_app_users_has_kopie_app_users2" columns="app_users_id" ref-table="app_users" ref-schema="" ref-catalog="zadanie_3" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_app_users_has_kopie_kopie2" columns="kopie_id_kopii" ref-table="kopie" ref-schema="" ref-catalog="zadanie_3" ref-columns="id_kopii" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_app_users_has_kopie_app_users2_idx" unique="false" columns="app_users_id"/>
+      <index name="fk_app_users_has_kopie_kopie2_idx" unique="false" columns="kopie_id_kopii"/>
+    </table>
+    <table name="filmy" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id_filmu" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tytul" sqlType="VARCHAR" precision="40" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rok_produkcji" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="cena" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="id_filmu"/>
+      <exported-key name="fk_filmy_has_aktorzy_filmy1" table="filmy_has_aktorzy" schema="" catalog="zadanie_3" columns="filmy_id_filmu"/>
+      <exported-key name="fk_kopie_filmy1" table="kopie" schema="" catalog="zadanie_3" columns="id_filmu"/>
+    </table>
+    <table name="filmy_has_aktorzy" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="filmy_id_filmu" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aktorzy_id_aktora" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="filmy_id_filmu,aktorzy_id_aktora"/>
+      <foreign-key name="fk_filmy_has_aktorzy_aktorzy1" columns="aktorzy_id_aktora" ref-table="aktorzy" ref-schema="" ref-catalog="zadanie_3" ref-columns="id_aktora" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_filmy_has_aktorzy_filmy1" columns="filmy_id_filmu" ref-table="filmy" ref-schema="" ref-catalog="zadanie_3" ref-columns="id_filmu" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_filmy_has_aktorzy_aktorzy1_idx" unique="false" columns="aktorzy_id_aktora"/>
+      <index name="fk_filmy_has_aktorzy_filmy1_idx" unique="false" columns="filmy_id_filmu"/>
+    </table>
+    <table name="kontakt" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tresc" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data_wprowadzenia" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="kopie" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id_kopii" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_filmu" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="czy_dostepna" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id_kopii"/>
+      <foreign-key name="fk_kopie_filmy1" columns="id_filmu" ref-table="filmy" ref-schema="" ref-catalog="zadanie_3" ref-columns="id_filmu" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_app_users_has_kopie_kopie2" table="app_users_has_kopie" schema="" catalog="zadanie_3" columns="kopie_id_kopii"/>
+      <exported-key name="fk_app_users_has_kopie_kopie1" table="wypozyczenia" schema="" catalog="zadanie_3" columns="kopie_id_kopii"/>
+      <index name="fk_kopie_filmy1_idx" unique="false" columns="id_filmu"/>
+    </table>
+    <table name="wypozyczenia" schema="" catalog="zadanie_3" type="TABLE">
+      <column name="id_wypozyczenia" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="app_users_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kopie_id_kopii" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="data_wypozyczenia" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="data_zwrotu" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="id_wypozyczenia"/>
+      <foreign-key name="fk_app_users_has_kopie_app_users1" columns="app_users_id" ref-table="app_users" ref-schema="" ref-catalog="zadanie_3" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_app_users_has_kopie_kopie1" columns="kopie_id_kopii" ref-table="kopie" ref-schema="" ref-catalog="zadanie_3" ref-columns="id_kopii" update-rule="0" delete-rule="3" deferrability="2"/>
+      <index name="unique_id_wypozyczenia" unique="true" columns="id_wypozyczenia"/>
+      <index name="fk_app_users_has_kopie_app_users1_idx" unique="false" columns="app_users_id"/>
+      <index name="fk_app_users_has_kopie_kopie1_idx" unique="false" columns="kopie_id_kopii"/>
+    </table>
+  </data-source>
+</component>

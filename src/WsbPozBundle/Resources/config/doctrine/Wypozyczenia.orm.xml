@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="WsbPozBundle\Entity\Wypozyczenia" table="wypozyczenia">
+    <indexes>
+      <index name="fk_app_users_has_kopie_kopie1_idx" columns="kopie_id_kopii"/>
+      <index name="fk_app_users_has_kopie_app_users1_idx" columns="app_users_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="unique_id_wypozyczenia" columns="id_wypozyczenia"/>
+    </unique-constraints>
+    <id name="idWypozyczenia" type="integer" column="id_wypozyczenia">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="dataWypozyczenia" type="date" column="data_wypozyczenia" nullable="false"/>
+    <field name="dataZwrotu" type="date" column="data_zwrotu" nullable="true"/>
+    <many-to-one field="kopieKopii" target-entity="Kopie">
+      <join-columns>
+        <join-column name="kopie_id_kopii" referenced-column-name="id_kopii"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="appUsers" target-entity="User">
+      <join-columns>
+        <join-column name="app_users_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

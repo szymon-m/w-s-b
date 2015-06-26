@@ -1,0 +1,29 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+    {% if app.session.flashBag.has('failure') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('failure') %}
+             </br>   !!!! ============ {{ msg }} ================= !!! </br>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <ul>
+    {% for filmy in filmy %}
+
+        <li>{{ filmy.kopieKopii.idFilmu.getTytul }}
+            {{ filmy.kopieKopii.idFilmu.getRokProdukcji }}
+            {{ filmy.dataWypozyczenia|date('d-m-Y') }}
+
+
+        </li>
+
+    {% endfor %}
+    </ul>
+
+
+
+
+
+{% endblock %}

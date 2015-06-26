@@ -1,0 +1,18 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+
+
+    {%  for filmy in filmy_aktora %}
+            {{ filmy.idFilmu }}{{ filmy.tytul }}
+
+            {% for aktor in filmy.AktorzyAktora %}
+
+            <ul>
+                <li>{{ aktor.getIdAktora }}  {{ aktor.getImie }}  {{ aktor.getNazwisko  }}</li>
+            </ul>
+            {% endfor %}
+
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,59 @@
+<?php
+
+namespace WsbPozBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Wypozyczenia
+ *
+ * @ORM\Table(name="wypozyczenia", uniqueConstraints={@ORM\UniqueConstraint(name="unique_id_wypozyczenia", columns={"id_wypozyczenia"})}, indexes={@ORM\Index(name="fk_app_users_has_kopie_kopie1_idx", columns={"kopie_id_kopii"}), @ORM\Index(name="fk_app_users_has_kopie_app_users1_idx", columns={"app_users_id"})})
+ * @ORM\Entity
+ */
+class Wypozyczenia
+{
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_wypozyczenia", type="date", nullable=false)
+     */
+    private $dataWypozyczenia;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_zwrotu", type="date", nullable=true)
+     */
+    private $dataZwrotu;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_wypozyczenia", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idWypozyczenia;
+
+    /**
+     * @var \WsbPozBundle\Entity\Kopie
+     *
+     * @ORM\ManyToOne(targetEntity="WsbPozBundle\Entity\Kopie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kopie_id_kopii", referencedColumnName="id_kopii")
+     * })
+     */
+    private $kopieKopii;
+
+    /**
+     * @var \WsbPozBundle\Entity\AppUsers
+     *
+     * @ORM\ManyToOne(targetEntity="WsbPozBundle\Entity\AppUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="app_users_id", referencedColumnName="id")
+     * })
+     */
+    private $appUsers;
+
+
+}

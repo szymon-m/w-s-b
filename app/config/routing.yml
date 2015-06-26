@@ -1,0 +1,8 @@
+wsb_poz:
+    resource: "@WsbPozBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

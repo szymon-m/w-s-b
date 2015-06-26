@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %} Wypożyczalnia {% endblock %}</title>
+</head>
+<body>
+{% block stylesheets %}
+    {% stylesheets '@WsbPozBundle/Resources/public/css/menu.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% stylesheets '@WsbPozBundle/Resources/public/css/style.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+{% endblock %}
+<div id="top">
+    <div id="NAGLOWEK">
+        Witamy na stronie wypożyczalni "Nasza wypożyczalnia".</br>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %} Witaj: {{ app.security.getToken().getUser().getImie() }} {% endif %}
+
+    </div>
+
+    <div id="MENU">
+    {% block sidebar %}
+        <dl>
+
+
+            <dt><a href="{{ path('hello') }}">Strona główna</a></dt>
+
+            <dt>{% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}<a href="{{ path('login_route') }}">Zaloguj się</a>{% endif %}</dt>
+            <dt>{% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}<a href="{{ path('register') }}">Zarejestruj się</a>{% endif %}</dt>
+
+
+
+            {% if is_granted('ROLE_ADMIN') %}
+            <dt><a href="{{ path('filmy') }}">Filmy</a></dt>
+            <dt><a href="{{ path('aktorzy') }}">Aktorzy</a></dt>
+            <dt><a href="{{ path('kopie') }}">Kopie</a></dt>
+            {%  endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <dt><a href="{{ path('logout') }}"> Wyloguj się</a></dt>
+                <dt><a href="{{ path('oferta') }}">Oferta</a></dt>
+            {% endif %}
+
+
+            <dt><a href="{{ path('kontakt') }}">Kontakt</a></dt>
+        </dl>
+    {% endblock %}
+    </div>
+
+    <div id="TRESC">
+{% block content %}
+{% for flashMessage in app.session.get('notice') %}
+        {{ flashMessage }}
+{%  endfor %}
+
+{% endblock %}
+
+</div>
+
+    <div id="STOPKA">
+
+    </div>
+</div>
+</body>
+</html>
+

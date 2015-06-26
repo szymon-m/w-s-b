@@ -1,0 +1,21 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+<ul>
+    {% if is_granted('ROLE_ADMIN') %}
+
+
+    {% endif %}
+</ul>
+{% for kopie in kopie %}
+<ul>
+    <li>{{ kopie.idKopii}}.{{ kopie.idFilmu }} {{ kopie.czyDostepna }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+
+    {% endif %}</li>
+</ul>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="WsbPozBundle\Entity\Filmy" table="filmy">
+    <id name="idFilmu" type="integer" column="id_filmu">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="tytul" type="string" column="tytul" length="40" nullable="true"/>
+    <field name="rokProdukcji" type="integer" column="rok_produkcji" nullable="true"/>
+    <field name="cena" type="float" column="cena" precision="10" scale="0" nullable="true"/>
+    <many-to-many field="aktorzyAktora" target-entity="Aktorzy" inversed-by="filmyFilmu">
+      <join-table name="filmy_has_aktorzy">
+        <join-columns>
+          <join-column name="filmy_id_filmu" referenced-column-name="id_filmu"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="aktorzy_id_aktora" referenced-column-name="id_aktora"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

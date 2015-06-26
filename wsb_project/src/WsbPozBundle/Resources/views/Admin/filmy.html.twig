@@ -1,0 +1,26 @@
+{% extends 'WsbPozBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+<ul>
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <li><a href="{{ path('nowy_film') }}"> Nowy film </a></li>
+
+    {% endif %}
+</ul>
+
+
+{% for filmy in filmy %}
+<ul>
+    <li>{{ filmy.idFilmu}}.{{ filmy.tytul }}  Rok produkcji: {{ filmy.rokProdukcji }} Cena: {{ filmy.cena }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('usun_film',{'id': filmy.idFilmu }) }}"> Usuń </a>
+
+    {% endif %}
+    </li>
+</ul>
+{% endfor %}
+{% endblock %}
